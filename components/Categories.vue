@@ -6,9 +6,12 @@
         :key="category.id"
         :category="category"
       >
-        <NuxtLink :to="`/category/${category.id}`" class="links">{{
-          category.attributes.name
-        }}</NuxtLink>
+        <NuxtLink
+          :to="`/category/${category.id}`"
+          class="links"
+          v-if="category.attributes.parent.data === null"
+          >{{ category.attributes.name }}</NuxtLink
+        >
       </li>
     </ul>
   </div>
@@ -24,30 +27,13 @@ export default {
   methods: {
     async fetchProducts() {
       this.categories = await this.$axios
-        .get('http://localhost:1337/api/categories')
-        .then(
-          ({ data }) => data.data
-          //   data.data.map((item, index) => {
-          //     console.log('меп', item.attributes, index)
-          //     return item.attributes
-          //   })
-          //   console.log()
-          // })
-        )
-    },
-
-    sortByParent() {
-      this.categories.map((item) => {
-        console.log(item)
-        if (item.parent.data !== null) {
-          return this.parentCategories.push(item)
-        }
-      })
+        .get('http://localhost:1337/api/categories/?populate=*')
+        .then(({ data }) => data.data)
     },
   },
 
   mounted() {
-    this.fetchProducts(), this.sortByParent()
+    this.fetchProducts()
   },
 }
 </script>

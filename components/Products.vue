@@ -10,6 +10,7 @@
         <div class="images-product">
           <img src="" alt="" />
         </div>
+        <div class="price-product">{{ product.attributes.price }} €</div>
         <div class="name-product">
           <h3>{{ product.attributes.name }}</h3>
         </div>
@@ -45,6 +46,17 @@
   height: 225px;
   border: 1px solid #f2f2f2;
   border-radius: 5px;
+}
+.price-product {
+  position: relative;
+  float: right;
+  right: 14px;
+  bottom: 30px;
+  background-color: #357ebd;
+  color: #990000;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
 }
 .name-product {
   margin: 20px 0px 10px 0px;

@@ -58,7 +58,8 @@ body {
 }
 .navlinks {
   height: 42px;
-  width: 25%;
+  width: 80%;
+  max-width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -8,22 +8,28 @@
           <div class="images">
             <!-- v-for="(images, index) in product.data.attributes.images.data"
               :key="index"
-              :src="images.attributes.formats.thumbnail.url" -->
-            <div class="main-image">
-              <img :alt="product.data.attributes.name" />
+              :src="
+                  product.attributes.images.data.attributes.formats.thumbnail
+                    .url" -->
+            <div
+              class="main-image"
+              v-for="(img, index) in product.data.attributes.images.data"
+              :key="index"
+            >
+              <img :src="`http://localhost:1337${img.attributes.url}`" alt="" />
             </div>
-            <div class="other-img">
+            <div class="other-img-blog">
               <div class="other-images">
-                <img :alt="product.data.attributes.name" />
+                <img />
               </div>
               <div class="other-images">
-                <img :alt="product.data.attributes.name" />
+                <img />
               </div>
               <div class="other-images">
-                <img :alt="product.data.attributes.name" />
+                <img />
               </div>
               <div class="other-images">
-                <img :alt="product.data.attributes.name" />
+                <img />
               </div>
             </div>
           </div>
@@ -118,7 +124,7 @@ export default {
   padding: 4px;
   box-sizing: border-box;
 }
-.other-img {
+.other-img-blog {
   display: flex;
 }
 .other-images {
@@ -129,6 +135,7 @@ export default {
 }
 .desc {
   width: 50%;
+  margin-left: 10px;
 }
 .product-price {
   display: flex;
