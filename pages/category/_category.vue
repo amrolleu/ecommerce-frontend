@@ -34,7 +34,9 @@
               :key="index"
             >
               <NuxtLink :to="`/category/${subcategory.id}`" class="list-links">
-                {{ subcategory.attributes.name }}
+                <button class="btn-links">
+                  {{ subcategory.attributes.name }}
+                </button>
               </NuxtLink>
             </li>
           </ul>
@@ -69,12 +71,6 @@ export default {
   align-items: center;
   padding: 10px;
 }
-.list-links {
-  text-decoration: none;
-  color: #0a0101;
-  font-weight: 600;
-  font-size: 18px;
-}
 .list-subcategory {
   list-style: none;
   display: flex;
@@ -84,13 +80,29 @@ export default {
 .list-item {
   width: 27%;
   height: 40px;
-  background-color: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #d8d7d7;
   border-radius: 4px;
   margin-top: 20px;
+}
+.list-links {
+  width: 100%;
+  text-decoration: none;
+}
+.btn-links {
+  width: 100%;
+  height: 40px;
+  background-color: #f2f2f2;
+  border: 1px solid #d8d7d7;
+  border-radius: 4px;
+  color: #0a0101;
+  font-weight: 600;
+  font-size: 18px;
+}
+.btn-links:hover {
+  background-color: rgb(252, 252, 252);
+  cursor: pointer;
 }
 .btn-product {
   width: 100%;

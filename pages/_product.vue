@@ -1,48 +1,36 @@
 <template>
   <div class="container">
     <div class="content-top">
-      <div class="content">
-        <h2>{{ product.data.attributes.name }}</h2>
+      <div class="content" v-if="product">
+        <h2>{{ product.attributes.name }}</h2>
         <hr />
         <div class="contents">
           <div class="images">
-            <!-- v-for="(images, index) in product.data.attributes.images.data"
-              :key="index"
-              :src="
-                  product.attributes.images.data.attributes.formats.thumbnail
-                    .url" -->
+            <div class="main-image">
+              <img class="main-image-blog" :src="mainImage" alt="" />
+            </div>
             <div
-              class="main-image"
-              v-for="(img, index) in product.data.attributes.images.data"
+              class="other-img-blog"
+              v-for="(img, index) in restImages"
               :key="index"
             >
-              <img :src="`http://localhost:1337${img.attributes.url}`" alt="" />
-            </div>
-            <div class="other-img-blog">
               <div class="other-images">
-                <img />
-              </div>
-              <div class="other-images">
-                <img />
-              </div>
-              <div class="other-images">
-                <img />
-              </div>
-              <div class="other-images">
-                <img />
+                <img
+                  class="other-image-blog"
+                  :src="`http://localhost:1337${img.attributes.url}`"
+                  alt=""
+                />
               </div>
             </div>
           </div>
           <div class="desc">
-            <div class="product-price">
-              {{ product.data.attributes.price }} €
-            </div>
+            <div class="product-price">{{ product.attributes.price }} €</div>
             <div class="product-info">
-              <div class="product-slug">{{ product.data.attributes.slug }}</div>
-              <div class="product-sku">{{ product.data.attributes.sku }}</div>
-              <div class="product-hits">{{ product.data.attributes.hits }}</div>
+              <div class="product-slug">{{ product.attributes.slug }}</div>
+              <div class="product-sku">{{ product.attributes.sku }}</div>
+              <div class="product-hits">{{ product.attributes.hits }}</div>
               <div class="product-hits">
-                {{ product.data.attributes.publishedAt }}
+                {{ product.attributes.publishedAt }}
               </div>
             </div>
           </div>
@@ -64,33 +52,51 @@
         </ul>
       </div>
     </div>
-    <div class="product-desc">
-      {{ product.data.attributes.description }}
+    <div class="product-desc" v-if="product">
+      {{ product.attributes.description }}
     </div>
   </div>
 </template>
 <script>
 export default {
-  async asyncData({ params, $axios }) {
-    const product = await $axios.$get(
-      `http://localhost:1337/api/products/${params.product}/?populate=*`
-    )
-    return { product }
+  async asyncData({ $axios }) {
+    const products = await $axios
+      .$get(`http://localhost:1337/api/products/?populate=*`)
+      .then((res) => {
+        return res.data
+      })
+    return { products }
   },
   data() {
     return {
-      products: [],
+      product: null,
     }
   },
+
+  computed: {
+    mainImage() {
+      return (
+        'http://localhost:1337' +
+        this.product.attributes.images.data[0].attributes.url
+      )
+    },
+
+    restImages() {
+      return this.product.attributes.images.data.slice(1)
+    },
+  },
+
   methods: {
-    async fetchProducts() {
-      this.products = await this.$axios
-        .get('http://localhost:1337/api/products')
+    async fetchProduct() {
+      const productId = this.$route.params.product
+      this.product = await this.$axios
+        .get(`http://localhost:1337/api/products/${productId}/?populate=*`)
         .then(({ data }) => data.data)
     },
   },
-  mounted() {
-    this.fetchProducts()
+
+  async mounted() {
+    await this.fetchProduct()
   },
 }
 </script>
@@ -115,23 +121,34 @@ export default {
   display: flex;
   flex-wrap: wrap;
   height: 350px;
-  border: 1px solid black;
 }
 .main-image {
   width: 100%;
   height: 265px;
-  border: 1px solid #f2f2f2;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
   padding: 4px;
   box-sizing: border-box;
+  border-radius: 4px;
+}
+.main-image-blog {
+  width: 100%;
+  height: 100%;
 }
 .other-img-blog {
   display: flex;
-}
-.other-images {
+  justify-content: center;
   width: 25%;
-  border: 1px solid #f2f2f2;
+  height: 75px;
+  border: 1px solid #dddddd;
   padding: 4px;
   box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.other-image-blog {
+  width: 100%;
+  height: 100%;
 }
 .desc {
   width: 50%;

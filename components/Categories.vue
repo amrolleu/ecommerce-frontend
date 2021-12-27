@@ -21,11 +21,10 @@ export default {
   data() {
     return {
       categories: [],
-      parentCategories: [],
     }
   },
   methods: {
-    async fetchProducts() {
+    async fetchCategories() {
       this.categories = await this.$axios
         .get('http://localhost:1337/api/categories/?populate=*')
         .then(({ data }) => data.data)
@@ -33,7 +32,7 @@ export default {
   },
 
   mounted() {
-    this.fetchProducts()
+    this.fetchCategories()
   },
 }
 </script>
