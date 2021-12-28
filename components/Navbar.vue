@@ -49,6 +49,7 @@ body {
 .nav-header {
   background-color: #2f2f2f;
   width: 100%;
+  max-width: 100%;
 }
 
 .nav-text {
@@ -74,6 +75,7 @@ body {
 }
 .sidebar {
   width: 100%;
+  max-width: 100%;
   height: 120px;
   background-image: linear-gradient(to bottom, #ffffff 0%, #ececec 100%);
   background-repeat: repeat-x;
@@ -121,14 +123,13 @@ body {
   opacity: 0.2;
 }
 .list-section {
-  width: 25%;
+  width: 30%;
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 }
-.list-section.active {
-  flex: 10;
-}
+
 .list-sidebar {
   display: flex;
   align-items: center;
@@ -150,5 +151,36 @@ body {
   width: 100%;
   border-top: 5px solid #d5d5d5;
   border-bottom: 2px solid #888;
+}
+
+@media only screen and (max-width: 700px) {
+  .navlinks {
+    width: 100%;
+  }
+  .list-section {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .list-sidebar {
+    font-size: 14px;
+    height: 20px;
+  }
+  .link-sidebar {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .list-section {
+    width: 50%;
+  }
+  .list-sidebar {
+    margin-left: 20px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .list-section {
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 </style>

@@ -8,11 +8,12 @@
         <div
           v-for="(product, index) in category.data.attributes.products.data"
           :key="index"
+          class="product-container"
         >
-          <div class="product-container">
+          <div class="product-container-blog">
             <div class="info-product">
               <div class="images-product">
-                <img src="" alt="" />
+                <img src="" alt="" class="img-blog" />
               </div>
               <div class="name-product">
                 <h3>{{ product.attributes.name }}</h3>
@@ -61,15 +62,40 @@ export default {
   width: 80%;
 }
 .product-container {
+  display: flex;
+  justify-content: space-between;
+}
+.product-container-blog {
   width: 30%;
-  max-width: 350px;
-  border: 1px solid #d8d7d7;
+  max-width: 310px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
 }
 .info-product {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.images-product {
+  width: 100%;
+  height: 225px;
+  border-radius: 5px;
+  border: 1px solid #dddddd;
+}
+.img-blog {
+  width: 100%;
+  height: 100%;
+}
+.btn-product {
+  width: 100%;
+  height: 30px;
+  color: #ffffff;
+  background-color: #428bca;
+  border: 1px solid #357ebd;
+  border-radius: 5px;
+}
+.btn-product:hover {
+  background-color: #357ebd;
 }
 .list-subcategory {
   list-style: none;
@@ -106,5 +132,35 @@ export default {
 }
 .btn-product {
   width: 100%;
+}
+@media only screen and (max-width: 900px) {
+  .main {
+    width: 100%;
+  }
+  .product-container {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .product-container-blog {
+    width: 310px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .product-container-blog {
+    width: 100%;
+    justify-content: center;
+  }
+  .info-product {
+    width: 310px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .product-container {
+    justify-content: center;
+  }
+  .info-product {
+    width: 310px;
+  }
 }
 </style>

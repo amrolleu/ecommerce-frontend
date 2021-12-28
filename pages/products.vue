@@ -6,7 +6,7 @@
       :product="product"
       class="content-product"
     >
-      <div>
+      <div class="content-product-blog">
         <div class="images-product">
           <img
             :src="`http://localhost:1337${getMainImage(product)}`"
@@ -73,6 +73,9 @@ export default {
   padding: 10px;
   border-radius: 5px;
 }
+.content-product-blog {
+  max-height: 100%;
+}
 .images-product {
   width: 100%;
   height: 225px;
@@ -113,5 +116,37 @@ export default {
 }
 .btn-product:hover {
   background-color: #357ebd;
+}
+
+@media only screen and (max-width: 1200px) {
+  .name-product h3 {
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    height: 30px;
+  }
+  .content-product {
+    width: 310px;
+    margin-left: 20px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .container-product {
+    width: 100%;
+    justify-content: center;
+  }
+  .content-product {
+    width: 310px;
+    margin-left: 20px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .container-product {
+    justify-content: center;
+  }
+  .content-product {
+    width: 310px;
+    margin-left: 0px;
+  }
 }
 </style>

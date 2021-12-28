@@ -53,4 +53,13 @@ export default {
 .links {
   text-decoration: none;
 }
+
+@media only screen and (max-width: 900px) {
+  .main {
+    width: 100%;
+    text-align: center;
+  }
+  .main h2 {
+  }
+}
 </style>
