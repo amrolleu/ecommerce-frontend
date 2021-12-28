@@ -35,6 +35,9 @@
             </div>
           </div>
         </div>
+        <div class="product-desc" v-if="product">
+          {{ product.attributes.description }}
+        </div>
       </div>
       <div class="other-products">
         <h3>Другие продукты</h3>
@@ -51,9 +54,6 @@
           </li>
         </ul>
       </div>
-    </div>
-    <div class="product-desc" v-if="product">
-      {{ product.attributes.description }}
     </div>
   </div>
 </template>
@@ -75,6 +75,10 @@ export default {
 
   computed: {
     mainImage() {
+      let data = this.product.attributes.images.data
+      if (!data) {
+        return ''
+      }
       return (
         'http://localhost:1337' +
         this.product.attributes.images.data[0].attributes.url
@@ -82,6 +86,10 @@ export default {
     },
 
     restImages() {
+      let data = this.product.attributes.images.data
+      if (!data) {
+        return ''
+      }
       return this.product.attributes.images.data.slice(1)
     },
   },
@@ -196,5 +204,52 @@ export default {
 }
 .other-products {
   margin-left: 20px;
+}
+@media only screen and (max-width: 1200px) {
+  .content {
+    flex-wrap: wrap;
+    width: 800px;
+  }
+  .content-top {
+    flex-wrap: wrap;
+  }
+  .images {
+    width: 390px;
+  }
+  .desc {
+    width: 390px;
+  }
+  .main-image {
+    width: 390px;
+  }
+  .product-price {
+    width: 390px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .contents {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .images {
+    margin-bottom: 30px;
+  }
+  .desc {
+    margin-left: 0px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .images {
+    width: 320px;
+  }
+  .desc {
+    width: 320px;
+  }
+  .main-image {
+    width: 320px;
+  }
+  .product-price {
+    width: 320px;
+  }
 }
 </style>

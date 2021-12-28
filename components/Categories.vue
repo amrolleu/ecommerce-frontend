@@ -59,7 +59,5 @@ export default {
     width: 100%;
     text-align: center;
   }
-  .main h2 {
-  }
 }
 </style>
