@@ -1,6 +1,9 @@
 <template>
   <div class="main">
     <ul class="list-categories">
+      <li>
+        <NuxtLink :to="`/category/categories`">Все категории</NuxtLink>
+      </li>
       <li
         v-for="category in categories"
         :key="category.id"
@@ -29,6 +32,13 @@ export default {
         .get('http://localhost:1337/api/categories/?populate=*')
         .then(({ data }) => data.data)
     },
+    // parentCategory(product) {
+    //   let data = product.attributes.categories.data
+    //   if(!data) {
+    //     return product
+    //   }
+    //   return product.attributes.categories.data
+    // }
   },
 
   mounted() {
@@ -52,6 +62,27 @@ export default {
 }
 .links {
   text-decoration: none;
+}
+.all-categories {
+  display: flex;
+  flex-wrap: wrap;
+}
+.list-all-categories {
+  width: 27%;
+}
+.btn-links {
+  width: 100%;
+  height: 40px;
+  background-color: #f2f2f2;
+  border: 1px solid #d8d7d7;
+  border-radius: 4px;
+  color: #0a0101;
+  font-weight: 600;
+  font-size: 18px;
+}
+.btn-links:hover {
+  background-color: rgb(252, 252, 252);
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 900px) {

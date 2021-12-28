@@ -2,7 +2,9 @@
   <div>
     <Categories />
     <div class="main">
-      <h2>{{ category.data.attributes.name }}</h2>
+      <h2>
+        <span>{{ category.data.attributes.name }}</span>
+      </h2>
       <div>
         <p>{{ category.data.attributes.description }}</p>
         <div
