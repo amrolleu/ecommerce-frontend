@@ -81,6 +81,7 @@ body {
   background-repeat: repeat-x;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 }
 .lower-header {
   display: flex;
