@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <ul class="list-categories">
-      <li>
+      <!-- <li>
         <NuxtLink :to="`/category/categories`">Все категории</NuxtLink>
-      </li>
+      </li> -->
       <li
         v-for="category in categories"
         :key="category.id"

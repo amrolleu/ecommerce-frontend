@@ -4,12 +4,6 @@
       <Navbar />
     </div>
     <div class="home-main">
-      <div class="bar">
-        <ul class="bar-list">
-          <img class="logo-home" src="../assets/logo-home.png" alt="" />
-          <li>/ Hlavná stránka</li>
-        </ul>
-      </div>
       <div class="container-products">
         <div
           v-for="product in getProducts"
@@ -90,29 +84,6 @@ export default {
 .home-main {
   width: 85%;
   margin: auto;
-}
-.bar {
-  display: flex;
-  align-items: center;
-  margin: auto;
-  width: 100%;
-  background-color: #f2f2f2;
-  color: #999999;
-  height: 30px;
-  margin-top: 30px;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-.logo-home {
-  width: 17px;
-  height: 16px;
-}
-.bar-list {
-  list-style: none;
-  display: flex;
-}
-.bar-list li {
-  padding-left: 7px;
 }
 .container-products {
   width: 100%;

@@ -9,7 +9,7 @@
           <NuxtLink to="/products" class="link">HISTORY KIZLYAR</NuxtLink>
         </li>
         <li class="list">
-          <NuxtLink to="/about" class="link">PARTNERS</NuxtLink>
+          <NuxtLink to="/partners" class="link">PARTNERS</NuxtLink>
         </li>
       </div>
     </div>
@@ -38,6 +38,12 @@
       </div>
       <div class="bottom-strip"></div>
     </div>
+    <div class="bar">
+      <ul class="bar-list">
+        <img class="logo-home" src="../assets/logo-home.png" alt="" />
+        <li>/ Hlavná stránka</li>
+      </ul>
+    </div>
   </div>
 </template>
 //
@@ -47,19 +53,20 @@ body {
   margin: 0;
 }
 .nav-header {
-  background-color: #2f2f2f;
   width: 100%;
   max-width: 100%;
 }
 
 .nav-text {
+  background-color: #2f2f2f;
   color: #fff;
   margin: auto;
-  width: 85%;
+  width: 100%;
 }
 .navlinks {
+  margin-left: 110px;
   height: 42px;
-  width: 80%;
+  width: 85%;
   max-width: 300px;
   display: flex;
   justify-content: space-between;
@@ -153,6 +160,30 @@ body {
   border-top: 5px solid #d5d5d5;
   border-bottom: 2px solid #888;
 }
+.bar {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 85%;
+  background-color: #f5f5f5;
+  color: #999999;
+  height: 30px;
+  margin-top: 30px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 3px #777;
+}
+.logo-home {
+  width: 17px;
+  height: 16px;
+}
+.bar-list {
+  list-style: none;
+  display: flex;
+}
+.bar-list li {
+  padding-left: 7px;
+}
 
 @media only screen and (max-width: 700px) {
   .navlinks {
@@ -182,6 +213,9 @@ body {
   .list-section {
     justify-content: center;
     flex-direction: column;
+  }
+  .navlinks {
+    margin: auto;
   }
 }
 </style>
