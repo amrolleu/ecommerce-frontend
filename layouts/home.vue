@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     getProducts() {
-      return this.products.slice(-3)
+      return this.products.slice(-3).reverse()
     },
   },
   mounted() {

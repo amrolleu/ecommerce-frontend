@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="other-products">
-        <h3>Другие продукты</h3>
+        <h3>Последние продукты</h3>
         <ul style="padding-left: 20px">
           <li
             v-for="product in products"
@@ -63,10 +63,11 @@ export default {
     const products = await $axios
       .$get(`http://localhost:1337/api/products/?populate=*`)
       .then((res) => {
-        return res.data
+        return res.data.slice(-75).reverse()
       })
     return { products }
   },
+
   data() {
     return {
       product: null,
