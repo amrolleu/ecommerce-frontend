@@ -7,7 +7,7 @@
       class="content-product"
     >
       <div class="content-product-blog">
-        <div class="images-product">
+        <div class="images-products">
           <img
             :src="`http://localhost:1337${getMainImage(product)}`"
             alt="Изображение не найдено"
@@ -15,12 +15,9 @@
           />
         </div>
         <div class="price-product">{{ product.attributes.price }} €</div>
-        <div class="name-product">
-          <h3>{{ product.attributes.name }}</h3>
-        </div>
-        <div>
-          <NuxtLink :to="`/${product.id}`">
-            <button class="btn-product">View product</button>
+        <div class="name-products">
+          <NuxtLink :to="`/${product.id}`" class="name-product-blog">
+            <h3>{{ product.attributes.name }}</h3>
           </NuxtLink>
         </div>
       </div>
@@ -67,20 +64,16 @@ export default {
 }
 .content-product {
   width: 30%;
-  height: 310px;
   border: 1px solid #f2f2f2;
   margin-bottom: 20px;
-  padding: 10px;
   border-radius: 5px;
 }
 .content-product-blog {
   max-height: 100%;
 }
-.images-product {
+.images-products {
   width: 100%;
   height: 225px;
-  border: 1px solid #f2f2f2;
-  border-radius: 5px;
 }
 .img-blog {
   width: 100%;
@@ -91,33 +84,28 @@ export default {
   float: right;
   right: 14px;
   bottom: 30px;
-  background-color: #357ebd;
   color: #990000;
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 3px;
 }
-.name-product {
-  margin: 20px 0px 10px 0px;
-  text-align: center;
+.name-products {
+  padding: 10px 0px 10px 0px;
+  box-sizing: border-box;
+  text-align: left;
+  background-color: #f4f4f4;
 }
-.name-product h3 {
+.name-products h3 {
   font-family: 'Oswald', Impact, Arial, sans-serif;
   font-weight: 100;
-  margin-bottom: 0px;
+  margin: 0px;
 }
-.btn-product {
-  width: 100%;
-  height: 30px;
-  color: #ffffff;
-  background-color: #428bca;
-  border: 1px solid #357ebd;
-  border-radius: 5px;
+.name-product-blog {
+  text-decoration: none;
 }
-.btn-product:hover {
-  background-color: #357ebd;
+.name-product-blog:hover {
+  color: #428bca;
 }
-
 @media only screen and (max-width: 1200px) {
   .name-product h3 {
     font-size: 16px;

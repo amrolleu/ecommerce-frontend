@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <MainNavifation />
-    this is id {{ id }}
-  </div>
+  <div>this is id {{ id }}</div>
 </template>
 
 <script>
