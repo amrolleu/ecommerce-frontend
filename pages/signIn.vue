@@ -3,7 +3,7 @@
     <div><p>Authorization</p></div>
     <div class="auth-blog">
       <form @submit.prevent="submit">
-        <input v-model="email" type="email" class="inputs" />
+        <input v-model="email" type="text" class="inputs" />
         <input v-model="password" type="password" class="inputs" />
         <button type="submit" class="auth-btn">Submit</button>
       </form>
@@ -11,6 +11,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'signin',
   data() {
@@ -21,16 +22,17 @@ export default {
   },
   methods: {
     async submit() {
-      await fetch('http://localhost:1337/api/auth/local', {
-        mode: 'no-cors',
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          email: this.email,
+      await axios
+        .post('http://localhost:1337/api/auth/local/', {
+          identifier: this.email,
           password: this.password,
-        }),
-      })
+        })
+        .then((response) => {
+          localStorage.setItem('token', response.data.jwt)
+        })
+        .catch((error) => {
+          console.log('An error occurred:', error.response)
+        })
       await this.$router.push('/')
     },
   },
