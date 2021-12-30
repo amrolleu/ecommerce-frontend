@@ -206,6 +206,10 @@ export default {
 .other-products {
   margin-left: 20px;
 }
+.other-products a {
+  color: #428bca;
+  text-decoration: none;
+}
 @media only screen and (max-width: 1200px) {
   .content {
     flex-wrap: wrap;

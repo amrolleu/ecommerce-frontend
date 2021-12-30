@@ -32,10 +32,10 @@
         </div>
       </div>
       <div class="ad">
-        <p>
-          Obchod je z technicky dôvodov uzavretý <br />
-          v Stredu, Štvrtok a Piatok.
-        </p>
+        <div class="info-ad">
+          <p>Obchod je z technicky dôvodov uzavretý</p>
+          <p>v Stredu, Štvrtok a Piatok.</p>
+        </div>
       </div>
       <div class="news">
         <h1>Posledné novinky</h1>
@@ -155,12 +155,15 @@ export default {
   margin-bottom: 20px;
   text-align: center;
 }
+.info-ad {
+  height: 45px;
+  padding: 15px;
+}
 .ad p {
   color: #31708f;
-  padding: 15px;
   font-family: sans-serif;
   font-size: 14px;
-  line-height: 1.428571429;
+  margin: 0 0 10px 0;
 }
 .news {
   margin-top: 50px;

@@ -9,8 +9,12 @@
           <NuxtLink to="/products" class="link">HISTORY KIZLYAR</NuxtLink>
         </li>
         <li class="list">
-          <NuxtLink to="/partners" class="link">PARTNERS</NuxtLink>
+          <NuxtLink to="/market" class="link">MARKET</NuxtLink>
         </li>
+      </div>
+      <div class="auth-links">
+        <li><NuxtLink to="/signin" class="link">signin</NuxtLink></li>
+        <li><NuxtLink to="/signup" class="link">signup</NuxtLink></li>
       </div>
     </div>
     <div class="sidebar">
@@ -58,6 +62,8 @@ body {
 }
 
 .nav-text {
+  display: flex;
+  justify-content: space-between;
   background-color: #2f2f2f;
   color: #fff;
   margin: auto;
@@ -71,6 +77,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.auth-links {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+.auth-links li {
+  list-style: none;
+  padding-left: 30px;
+}
+.auth-links li a {
+  font-size: 14px;
 }
 .list {
   list-style: none;
@@ -170,8 +188,8 @@ body {
   height: 30px;
   margin-top: 30px;
   border-radius: 4px;
-  box-sizing: border-box;
   box-shadow: 0 2px 3px #777;
+  padding: 0px 15px;
 }
 .logo-home {
   width: 17px;
