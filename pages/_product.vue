@@ -32,6 +32,11 @@
               <div class="product-hits">
                 {{ product.attributes.publishedAt }}
               </div>
+              <div>
+                <button @click="addToCart('addToCart', product)">
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -71,6 +76,7 @@ export default {
   data() {
     return {
       product: null,
+      productsCart: [],
     }
   },
 
@@ -101,6 +107,45 @@ export default {
       this.product = await this.$axios
         .get(`http://localhost:1337/api/products/${productId}/?populate=*`)
         .then(({ data }) => data.data)
+    },
+
+    async addToCart() {
+      const cartState = JSON.parse(localStorage.getItem('products'))
+      this.productsCart = cartState
+      if (!this.productsCart) {
+        console.log(this.$route.params.id)
+        this.productsCart = []
+        this.productsCart.push({
+          quantity: 1,
+          id: this.product.id,
+          name: this.product.attributes.name,
+          price: this.product.attributes.price,
+          // img: this.product.attributes.images.data.attributes.url,
+        })
+        localStorage.setItem('products', JSON.stringify(this.productsCart))
+        return
+      }
+      let findProductById = this.productsCart.find(
+        (item) => item.id === this.product.id
+      )
+      if (findProductById) {
+        findProductById.quantity = +findProductById.quantity + 1
+        this.productsCart = [
+          ...this.productsCart.filter((item) => item.id !== this.product.id),
+          findProductById,
+        ]
+        console.log(this.productsCart)
+      } else {
+        console.log(2)
+        this.productsCart.push({
+          quantity: 1,
+          id: this.product.id,
+          name: this.product.attributes.name,
+          price: this.product.attributes.price,
+          // img: this.product.attributes.images.data.attributes.url,
+        })
+      }
+      localStorage.setItem('products', JSON.stringify(this.productsCart))
     },
   },
 

@@ -3,6 +3,7 @@
     <div>
       <Navbar />
     </div>
+
     <div class="home-main">
       <div class="container-products">
         <div

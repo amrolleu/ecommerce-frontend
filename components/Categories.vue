@@ -41,8 +41,8 @@ export default {
     // }
   },
 
-  mounted() {
-    this.fetchCategories()
+  async mounted() {
+    await this.fetchCategories()
   },
 }
 </script>

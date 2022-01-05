@@ -13,6 +13,8 @@
         </li>
       </div>
       <div class="auth-links">
+        <li></li>
+        <li><NuxtLink to="/cart" class="link">cart</NuxtLink></li>
         <li><NuxtLink to="/signin" class="link">signin</NuxtLink></li>
         <li><NuxtLink to="/signup" class="link">signup</NuxtLink></li>
       </div>
