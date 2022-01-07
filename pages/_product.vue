@@ -113,7 +113,6 @@ export default {
       const cartState = JSON.parse(localStorage.getItem('products'))
       this.productsCart = cartState
       if (!this.productsCart) {
-        console.log(this.$route.params.id)
         this.productsCart = []
         this.productsCart.push({
           quantity: 1,

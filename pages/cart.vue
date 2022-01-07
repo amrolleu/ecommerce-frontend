@@ -9,7 +9,11 @@
         class="cart-products"
       >
         <div class="cart-images">
-          <img src="https://placeimg.com/210/200/nature" alt="" />
+          <img
+            src="https://placeimg.com/210/200/nature"
+            alt=""
+            class="cart-img"
+          />
         </div>
         <div class="cart-info">
           <div class="cart-name">
@@ -132,10 +136,12 @@ export default {
   },
   computed: {
     totalPrice() {
+      // if (this.carts.quantity > 1) {
       return this.carts.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       )
+      // }
     },
   },
   methods: {
@@ -151,7 +157,7 @@ export default {
     },
     decrementQuantity(id) {
       let newCart = this.carts.map((item, index) => {
-        if (item.id === id) {
+        if (item.id === id && item.quantity > 1) {
           item.quantity--
         }
         return item
@@ -206,24 +212,6 @@ export default {
           }),
         },
       })
-      // if (data.data) {
-      //   this.carts = this.carts.map((item) => ({
-      //     ...item,
-      //     order_id: data.data.id,
-      //   }))
-      //   const { res } = await axios.post(
-      //     'http://localhost:1337/api/order-details/',
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-      //       },
-      //       data: {
-      //         items: this.carts,
-      //       },
-      //     }
-      //   )
-      //   console.log(res)
-      // }
     },
 
     async fetchCart() {
@@ -254,10 +242,10 @@ export default {
   justify-content: space-between;
 }
 .cart-content {
-  width: 55%;
+  width: 600px;
 }
 .cart-contacts {
-  width: 45%;
+  width: 500px;
 }
 .cart-contacts-info {
   background: #f5f5fe;
@@ -349,5 +337,79 @@ export default {
 .cart-total-text {
   font-size: 26px;
   font-weight: 600;
+}
+@media only screen and (max-width: 1320px) {
+  .cart-content {
+    width: 550px;
+  }
+  .cart-contacts {
+    width: 400px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .cart-content {
+    width: 550px;
+  }
+
+  .cart-products {
+    width: 100%;
+  }
+  .cart-contacts {
+    width: 380px;
+  }
+}
+@media only screen and (max-width: 1130px) {
+  .cart-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cart-content {
+    width: 650px;
+  }
+  .cart-contacts {
+    width: 550px;
+    margin-bottom: 30px;
+  }
+  @media only screen and (max-width: 650px) {
+    .cart-content {
+      width: 90%;
+      margin: auto;
+    }
+    .cart-products {
+      width: 100%;
+      height: 170px;
+    }
+    .cart-contacts {
+      width: 450px;
+    }
+    .cart-total-price {
+      margin-left: 30%;
+    }
+    .cart-images {
+      width: 40%;
+    }
+    .cart-img {
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 580px) {
+  .cart-total-price {
+    margin-left: 15%;
+  }
+  .cart-img {
+    width: 117px;
+    height: 117px;
+  }
+}
+@media only screen and (max-width: 520px) {
+  .cart-total-price {
+    margin-left: 20px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .cart-products {
+    height: 240px;
+  }
 }
 </style>
