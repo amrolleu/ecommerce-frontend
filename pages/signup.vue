@@ -1,6 +1,6 @@
 <template>
   <div class="auth-container">
-    <div><p>Registration</p></div>
+    <div class="register-text"><p>Registration</p></div>
     <div class="auth-blog">
       <form @submit.prevent="submit">
         <input
@@ -54,22 +54,38 @@ export default {
 </script>
 <style>
 .auth-container {
+  width: 87%;
   margin: auto;
-  width: 300px;
+}
+.register-text p {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  font-family: 'Circe Bold';
 }
 .auth-blog {
   height: 300px;
 }
 .inputs {
-  width: 100%;
+  width: 300px;
   margin-top: 20px;
-  padding: 5px;
+  padding: 10px;
+  height: 25px;
+  border: 1px solid #f2f2f2;
+  border-radius: 5px;
+  display: block;
 }
 .auth-btn {
-  background-color: blue;
-  width: 50%;
-  margin: auto;
-  margin-top: 20px;
-  padding: 5px;
+  width: 150px;
+  margin-top: 30px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #428bca;
+  border: 1px solid #357ebd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.auth-btn:hover {
+  background-color: #357ebd;
 }
 </style>

@@ -14,9 +14,9 @@
       </div>
       <div class="auth-links">
         <li></li>
-        <li><NuxtLink to="/cart" class="link">cart</NuxtLink></li>
-        <li><NuxtLink to="/signin" class="link">signin</NuxtLink></li>
-        <li><NuxtLink to="/signup" class="link">signup</NuxtLink></li>
+        <li><NuxtLink to="/cart" class="link">Cart</NuxtLink></li>
+        <li><NuxtLink to="/signin" class="link">Login</NuxtLink></li>
+        <li><NuxtLink to="/signup" class="link">Registration</NuxtLink></li>
       </div>
     </div>
     <div class="sidebar">
@@ -52,7 +52,37 @@
     </div>
   </div>
 </template>
-//
+
+<script>
+import axios from 'axios'
+import Vue from 'vue'
+export default Vue.extend({
+  data() {
+    return {
+      message: '',
+    }
+  },
+
+  async mounted() {
+    const res = await axios
+      .get('http://localhost:1337/api/users/', {
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      })
+      .then((response) => {
+        localStorage.getItem('token', response.data.jwt)
+
+        // const req = this.response.map((item) => {
+        //   if (item.id === id) {
+        //     return item.name
+        //   }
+        //   return item
+        // })
+        console.log(response)
+      })
+  },
+})
+</script>
 
 <style>
 body {

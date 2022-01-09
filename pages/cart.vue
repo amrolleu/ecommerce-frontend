@@ -197,8 +197,7 @@ export default {
         data: {
           quantity: this.carts.reduce((a, b) => a + b.quantity, 0),
           user_id: 1,
-          total_price: 100,
-          user_id: 1,
+          total_price: this.totalPrice,
           clients_fullname: this.clients_fullname,
           address: this.address,
           phone_number: this.phone_number,
