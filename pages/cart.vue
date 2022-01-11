@@ -136,12 +136,12 @@ export default {
   },
   computed: {
     totalPrice() {
-      // if (this.carts.quantity > 1) {
-      return this.carts.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      )
-      // }
+      if (this.carts.quantity > 1) {
+        return this.carts.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        )
+      }
     },
   },
   methods: {

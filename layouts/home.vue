@@ -15,7 +15,7 @@
           <div class="content-products-blog">
             <div class="images-product">
               <img
-                :src="`http://localhost:1337${getMainImage(product)}`"
+                :src="`${getMainImage(product)}`"
                 alt="Изображение не найдено"
                 class="img-blog"
               />
@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       products: [],
+      token: null,
     }
   },
 
@@ -68,6 +69,10 @@ export default {
         return ''
       }
       return product.attributes.images.data[0].attributes.url
+    },
+    async getToken() {
+      this.token = await JSON.parse(localStorage.getItem('token'))
+      console.log(token)
     },
   },
   computed: {

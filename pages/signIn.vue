@@ -38,6 +38,7 @@ export default {
         .then((response) => {
           localStorage.setItem('token', response.data.jwt)
           this.$axios.setHeader('token', response.data.jwt)
+          localStorage.setItem('user', JSON.stringify(response.data.user))
         })
         .catch((error) => {
           console.log('An error occurred:', error.response)

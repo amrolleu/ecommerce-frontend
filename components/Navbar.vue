@@ -15,8 +15,13 @@
       <div class="auth-links">
         <li></li>
         <li><NuxtLink to="/cart" class="link">Cart</NuxtLink></li>
-        <li><NuxtLink to="/signin" class="link">Login</NuxtLink></li>
-        <li><NuxtLink to="/signup" class="link">Registration</NuxtLink></li>
+        <template v-if="!authUser">
+          <li><NuxtLink to="/signin" class="link">Login</NuxtLink></li>
+          <li>
+            <NuxtLink to="/signup" class="link">Registration</NuxtLink>
+          </li>
+        </template>
+        <li v-else class="cart-user">{{ authUser.username }}</li>
       </div>
     </div>
     <div class="sidebar">
@@ -54,32 +59,19 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Vue from 'vue'
 export default Vue.extend({
   data() {
     return {
-      message: '',
+      authUser: null,
     }
   },
 
-  async mounted() {
-    const res = await axios
-      .get('http://localhost:1337/api/users/', {
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      })
-      .then((response) => {
-        localStorage.getItem('token', response.data.jwt)
-
-        // const req = this.response.map((item) => {
-        //   if (item.id === id) {
-        //     return item.name
-        //   }
-        //   return item
-        // })
-        console.log(response)
-      })
+  mounted() {
+    let user = JSON.parse(localStorage.getItem('user'))
+    if (user) {
+      this.authUser = user
+    }
   },
 })
 </script>
@@ -109,6 +101,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.cart-user {
+  color: rgb(11, 180, 11);
 }
 .auth-links {
   display: flex;

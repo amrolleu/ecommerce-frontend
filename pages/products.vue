@@ -9,7 +9,7 @@
       <div class="content-product-blog">
         <div class="images-products">
           <img
-            :src="`http://localhost:1337${getMainImage(product)}`"
+            :src="`${getMainImage(product)}`"
             alt="Изображение не найдено"
             class="img-blog"
           />

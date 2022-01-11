@@ -86,10 +86,7 @@ export default {
       if (!data) {
         return ''
       }
-      return (
-        'http://localhost:1337' +
-        this.product.attributes.images.data[0].attributes.url
-      )
+      return this.product.attributes.images.data[0].attributes.url
     },
 
     restImages() {

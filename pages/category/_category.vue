@@ -7,23 +7,25 @@
       </h2>
       <div>
         <p>{{ category.data.attributes.description }}</p>
-        <div
-          v-for="(product, index) in category.data.attributes.products.data"
-          :key="index"
-          class="product-container"
-        >
-          <div class="product-container-blog">
-            <div class="info-product">
-              <div class="images-product">
-                <img src="" alt="" class="img-blog" />
-              </div>
-              <div class="name-product">
-                <h3>{{ product.attributes.name }}</h3>
-              </div>
-              <div class="btn-product">
-                <NuxtLink :to="`/${product.id}`">
-                  <button class="btn-product">View product</button>
-                </NuxtLink>
+        <div class="category-products">
+          <div
+            v-for="(product, index) in category.data.attributes.products.data"
+            :key="index"
+            class="product-container"
+          >
+            <div class="product-container-blog">
+              <div class="info-product">
+                <div class="images-product">
+                  <img src="" alt="" class="img-blog" />
+                </div>
+                <div class="name-product">
+                  <h3>{{ product.attributes.name }}</h3>
+                </div>
+                <div class="btn-product">
+                  <NuxtLink :to="`/${product.id}`">
+                    <button class="btn-product">View product</button>
+                  </NuxtLink>
+                </div>
               </div>
             </div>
           </div>
@@ -63,12 +65,16 @@ export default {
 .main {
   width: 80%;
 }
-.product-container {
+.category-products {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+}
+.product-container {
+  width: 400px;
 }
 .product-container-blog {
-  width: 30%;
+  width: 100%;
   max-width: 310px;
   border: 1px solid #dddddd;
   border-radius: 5px;
