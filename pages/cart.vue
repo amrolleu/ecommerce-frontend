@@ -9,11 +9,7 @@
         class="cart-products"
       >
         <div class="cart-images">
-          <img
-            src="https://placeimg.com/210/200/nature"
-            alt=""
-            class="cart-img"
-          />
+          <img :src="cart.image" alt="" class="cart-img" />
         </div>
         <div class="cart-info">
           <div class="cart-name">
@@ -112,6 +108,7 @@ export default {
   data() {
     return {
       carts: [],
+      products: null,
       message: 'You are not authorized',
       authUser: null,
       errors: {
@@ -146,7 +143,7 @@ export default {
   },
   computed: {
     totalPrice() {
-      if (this.carts.quantity > 1) {
+      if (this.carts.quantity > 0) {
         return this.carts.reduce(
           (acc, item) => acc + item.price * item.quantity,
           0
@@ -224,25 +221,8 @@ export default {
       })
     },
 
-    async fetchCart() {
-      this.carts = await this.$axios.get('http://localhost:1337/api/orders', {
-        headers: {
-          Authorization: ` Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-    },
     async fetchCartProduct() {
       this.carts = await JSON.parse(localStorage.getItem('products'))
-      console.log(this.$route)
-    },
-
-    async fetchProduct() {
-      this.products = await this.$axios
-        .get(`http://localhost:1337/api/products/?populate=*`)
-        .then(({ data }) => data.data)
-      this.carts = this.products.filter((item) => {
-        return item.id == this.$route.params.category
-      })
     },
 
     async fetchToken() {
@@ -250,8 +230,9 @@ export default {
     },
   },
 
-  mounted() {
-    this.fetchCartProduct(), this.fetchToken()
+  async mounted() {
+    await this.fetchCartProduct()
+    await this.fetchToken()
   },
 }
 </script>
@@ -325,15 +306,18 @@ export default {
   border-radius: 15px;
 }
 .cart-images {
-  width: 35%;
+  width: 50%;
   height: 200px;
   margin-top: 25px;
   margin-left: 25px;
 }
+.cart-img {
+  width: 100%;
+  height: 100%;
+}
 .cart-info {
   width: 100%;
 }
-
 .cart-name {
   margin-left: 30px;
 }
@@ -427,6 +411,7 @@ export default {
     }
     .cart-images {
       width: 40%;
+      height: 117px;
     }
     .cart-img {
       width: 100%;

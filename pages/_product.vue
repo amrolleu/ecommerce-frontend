@@ -17,7 +17,7 @@
               <div class="other-images">
                 <img
                   class="other-image-blog"
-                  :src="`http://localhost:1337${img.attributes.url}`"
+                  :src="`${img.attributes.url}`"
                   alt=""
                 />
               </div>
@@ -109,15 +109,27 @@ export default {
     async addToCart() {
       const cartState = JSON.parse(localStorage.getItem('products'))
       this.productsCart = cartState
+      // this.products.forEach((item) => {
+      //   console.log(1, item.attributes.images.data[0].attributes.url)
+      // })
       if (!this.productsCart) {
         this.productsCart = []
-        this.productsCart.push({
-          quantity: 1,
-          id: this.product.id,
-          name: this.product.attributes.name,
-          price: this.product.attributes.price,
-          // img: this.product.attributes.images.data.attributes.url,
-        })
+        if (this.product.attributes.images.data) {
+          this.productsCart.push({
+            quantity: 1,
+            id: this.product.id,
+            name: this.product.attributes.name,
+            price: this.product.attributes.price,
+            image: this.product.attributes.images.data[0].attributes.url,
+          })
+        } else {
+          this.productsCart.push({
+            quantity: 1,
+            id: this.product.id,
+            name: this.product.attributes.name,
+            price: this.product.attributes.price,
+          })
+        }
         localStorage.setItem('products', JSON.stringify(this.productsCart))
         return
       }
@@ -130,16 +142,23 @@ export default {
           ...this.productsCart.filter((item) => item.id !== this.product.id),
           findProductById,
         ]
-        console.log(this.productsCart)
       } else {
-        console.log(2)
-        this.productsCart.push({
-          quantity: 1,
-          id: this.product.id,
-          name: this.product.attributes.name,
-          price: this.product.attributes.price,
-          // img: this.product.attributes.images.data.attributes.url,
-        })
+        if (this.product.attributes.images.data) {
+          this.productsCart.push({
+            quantity: 1,
+            id: this.product.id,
+            name: this.product.attributes.name,
+            price: this.product.attributes.price,
+            image: this.product.attributes.images.data[0].attributes.url,
+          })
+        } else {
+          this.productsCart.push({
+            quantity: 1,
+            id: this.product.id,
+            name: this.product.attributes.name,
+            price: this.product.attributes.price,
+          })
+        }
       }
       localStorage.setItem('products', JSON.stringify(this.productsCart))
     },
