@@ -92,7 +92,15 @@
             }"
           />
         </div>
-        <button class="cart-order-btn" @click="addOrder">Add order</button>
+        <div v-if="!authUser">
+          <p>{{ message }}</p>
+          <button class="cart-order-message">
+            <NuxtLink to="/signin">Log in</NuxtLink>
+          </button>
+        </div>
+        <div v-else>
+          <button class="cart-order-btn" @click="addOrder">Add order</button>
+        </div>
       </div>
     </div>
   </div>
@@ -104,6 +112,8 @@ export default {
   data() {
     return {
       carts: [],
+      message: 'You are not authorized',
+      authUser: null,
       errors: {
         address: '',
         clients_fullname: '',
@@ -189,11 +199,12 @@ export default {
       this.carts = this.carts.map((item) => ({
         ...item,
       }))
-      console.log(this.carts)
+
       const { data } = await axios.post('http://localhost:1337/api/orders/', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
+
         data: {
           quantity: this.carts.reduce((a, b) => a + b.quantity, 0),
           user_id: 1,
@@ -222,10 +233,25 @@ export default {
     },
     async fetchCartProduct() {
       this.carts = await JSON.parse(localStorage.getItem('products'))
+      console.log(this.$route)
+    },
+
+    async fetchProduct() {
+      this.products = await this.$axios
+        .get(`http://localhost:1337/api/products/?populate=*`)
+        .then(({ data }) => data.data)
+      this.carts = this.products.filter((item) => {
+        return item.id == this.$route.params.category
+      })
+    },
+
+    async fetchToken() {
+      this.authUser = await localStorage.getItem('token')
     },
   },
-  async mounted() {
-    await this.fetchCartProduct()
+
+  mounted() {
+    this.fetchCartProduct(), this.fetchToken()
   },
 }
 </script>
@@ -272,6 +298,21 @@ export default {
   cursor: pointer;
 }
 .cart-order-btn:hover {
+  background-color: #357ebd;
+}
+.cart-order-message {
+  width: 200px;
+  height: 40px;
+  background-color: #428bca;
+  border: 1px solid #357ebd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.cart-order-message a {
+  text-decoration: none;
+  color: #ffffff;
+}
+.cart-order-message:hover {
   background-color: #357ebd;
 }
 

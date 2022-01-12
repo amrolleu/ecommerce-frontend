@@ -1,22 +1,27 @@
 <template>
   <div>
     <Categories />
-    <div class="main">
+    <div class="main" v-if="categories">
       <h2>
-        <span>{{ category.data.attributes.name }}</span>
+        <span>{{ categories.attributes.name }}</span>
       </h2>
       <div>
-        <p>{{ category.data.attributes.description }}</p>
-        <div class="category-products">
+        <p>{{ categories.attributes.description }}</p>
+        <div class="category-products" v-if="products">
           <div
-            v-for="(product, index) in category.data.attributes.products.data"
+            v-for="(product, index) in products"
             :key="index"
             class="product-container"
           >
             <div class="product-container-blog">
               <div class="info-product">
                 <div class="images-product">
-                  <img src="" alt="" class="img-blog" />
+                  <img
+                    v-if="product.attributes.images.data"
+                    :src="product.attributes.images.data[0].attributes.url"
+                    alt=""
+                    class="img-blog"
+                  />
                 </div>
                 <div class="name-product">
                   <h3>{{ product.attributes.name }}</h3>
@@ -34,7 +39,7 @@
           <ul class="list-subcategory">
             <li
               class="list-item"
-              v-for="(subcategory, index) in category.data.attributes.categories
+              v-for="(subcategory, index) in categories.attributes.categories
                 .data"
               :key="index"
             >
@@ -51,12 +56,41 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
-  async asyncData({ params, $axios }) {
-    const category = await $axios.$get(
-      `http://localhost:1337/api/categories/${params.category}/?populate=*`
-    )
-    return { category }
+  data() {
+    return {
+      products: null,
+      categories: null,
+    }
+  },
+  // async asyncData({ params, $axios }) {
+  //   const category = await $axios.$get(
+  //     `http://localhost:1337/api/categories/${params.category}/?populate=*`
+  //   )
+  //   return { category }
+  // },
+
+  methods: {
+    async fecthCategory() {
+      const categoryId = this.$route.params.category
+      const { data } = await this.$axios.get(
+        `http://localhost:1337/api/categories/${categoryId}/?populate=*`
+      )
+      this.categories = data.data
+    },
+    async fetchProduct() {
+      this.products = await this.$axios
+        .get(`http://localhost:1337/api/products/?populate=*`)
+        .then(({ data }) => data.data)
+      this.products = this.products.filter((item) => {
+        return item.attributes.category.data.id == this.$route.params.category
+      })
+    },
+  },
+  async mounted() {
+    await this.fecthCategory()
+    await this.fetchProduct()
   },
 }
 </script>
