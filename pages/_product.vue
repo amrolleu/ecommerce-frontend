@@ -33,9 +33,7 @@
                 {{ product.attributes.publishedAt }}
               </div>
               <div>
-                <button @click="addToCart('addToCart', product)">
-                  Add to Cart
-                </button>
+                <button @click="addToCart()">Add to Cart</button>
               </div>
             </div>
           </div>
@@ -96,6 +94,10 @@ export default {
       }
       return this.product.attributes.images.data.slice(1)
     },
+
+    cart() {
+      return this.$store.state.cart.data
+    },
   },
 
   methods: {
@@ -107,60 +109,19 @@ export default {
     },
 
     async addToCart() {
-      const cartState = JSON.parse(localStorage.getItem('products'))
-      this.productsCart = cartState
-      // this.products.forEach((item) => {
-      //   console.log(1, item.attributes.images.data[0].attributes.url)
-      // })
-      if (!this.productsCart) {
-        this.productsCart = []
-        if (this.product.attributes.images.data) {
-          this.productsCart.push({
-            quantity: 1,
-            id: this.product.id,
-            name: this.product.attributes.name,
-            price: this.product.attributes.price,
-            image: this.product.attributes.images.data[0].attributes.url,
-          })
-        } else {
-          this.productsCart.push({
-            quantity: 1,
-            id: this.product.id,
-            name: this.product.attributes.name,
-            price: this.product.attributes.price,
-          })
-        }
-        localStorage.setItem('products', JSON.stringify(this.productsCart))
-        return
+      const product = {
+        quantity: 1,
+        id: this.product.id,
+        name: this.product.attributes.name,
+        price: this.product.attributes.price,
       }
-      let findProductById = this.productsCart.find(
-        (item) => item.id === this.product.id
-      )
-      if (findProductById) {
-        findProductById.quantity = +findProductById.quantity + 1
-        this.productsCart = [
-          ...this.productsCart.filter((item) => item.id !== this.product.id),
-          findProductById,
-        ]
-      } else {
-        if (this.product.attributes.images.data) {
-          this.productsCart.push({
-            quantity: 1,
-            id: this.product.id,
-            name: this.product.attributes.name,
-            price: this.product.attributes.price,
-            image: this.product.attributes.images.data[0].attributes.url,
-          })
-        } else {
-          this.productsCart.push({
-            quantity: 1,
-            id: this.product.id,
-            name: this.product.attributes.name,
-            price: this.product.attributes.price,
-          })
-        }
+
+      if (this.product.attributes.images.data) {
+        product.image = this.product.attributes.images.data[0].attributes.url
       }
-      localStorage.setItem('products', JSON.stringify(this.productsCart))
+
+      // Mutate the store state
+      this.$store.commit('cart/add', product)
     },
   },
 

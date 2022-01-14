@@ -14,9 +14,15 @@
             class="img-blog"
           />
         </div>
-        <div class="price-product">{{ product.attributes.price }} €</div>
+        <div class="price-product" v-if="product.attributes">
+          {{ product.attributes.price }} €
+        </div>
         <div class="name-products">
-          <NuxtLink :to="`/${product.id}`" class="name-product-blog">
+          <NuxtLink
+            :to="`/${product.id}`"
+            class="name-product-blog"
+            v-if="product.attributes"
+          >
             <h3>{{ product.attributes.name }}</h3>
           </NuxtLink>
         </div>
@@ -26,29 +32,28 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      products: [],
-    }
+  computed: {
+    ...mapGetters({
+      products: 'products/PRODUCTS',
+    }),
   },
 
   methods: {
-    async fetchProducts() {
-      this.products = await this.$axios
-        .get(`http://localhost:1337/api/products/?populate=*`)
-        .then(({ data }) => data.data)
-    },
-    getMainImage(product) {
-      let data = product.attributes.images.data
+    ...mapActions({
+      getProducts: 'products/FETCH_PRODUCTS',
+    }),
+    getMainImage(products) {
+      let data = products.attributes.images.data
       if (!data) {
         return ''
       }
-      return product.attributes.images.data[0].attributes.url
+      return products.attributes.images.data[0].attributes.url
     },
   },
   mounted() {
-    this.fetchProducts()
+    this.getProducts()
   },
 }
 </script>

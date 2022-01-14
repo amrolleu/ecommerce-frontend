@@ -3,7 +3,12 @@
     <div class="login-text"><p>Authorization</p></div>
     <div class="auth-blog">
       <form @submit.prevent="submit">
-        <input v-model="email" type="text" class="inputs" placeholder="Email" />
+        <input
+          v-model="identifier"
+          type="text"
+          class="inputs"
+          placeholder="Email"
+        />
         <input
           v-model="password"
           type="password"
@@ -19,31 +24,26 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
 export default {
   name: 'signin',
   data() {
     return {
-      email: '',
+      identifier: '',
       password: '',
     }
   },
   methods: {
-    async submit() {
-      await axios
-        .post('http://localhost:1337/api/auth/local/', {
-          identifier: this.email,
-          password: this.password,
-        })
-        .then((response) => {
-          localStorage.setItem('token', response.data.jwt)
-          this.$axios.setHeader('token', response.data.jwt)
-          localStorage.setItem('user', JSON.stringify(response.data.user))
-        })
-        .catch((error) => {
-          console.log('An error occurred:', error.response)
-        })
-      await this.$router.push('/')
+    ...mapActions({
+      signIn: 'auth/signIn',
+    }),
+
+    submit() {
+      let form = {
+        identifier: this.identifier,
+        password: this.password,
+      }
+      this.signIn(form)
     },
   },
 }

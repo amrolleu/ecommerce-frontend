@@ -2,35 +2,30 @@
   <div class="cart-container">
     <div class="cart-content">
       <h1>Cart</h1>
-      <div
-        v-for="(cart, index) in carts"
-        :key="index"
-        :cart="cart"
-        class="cart-products"
-      >
+      <div v-for="(product, index) in cart" :key="index" class="cart-products">
         <div class="cart-images">
-          <img :src="cart.image" alt="" class="cart-img" />
+          <img :src="product.image" alt="" class="cart-img" />
         </div>
         <div class="cart-info">
           <div class="cart-name">
-            <h3 class="cart-name-h3">{{ cart.name }}</h3>
+            <h3 class="cart-name-h3">{{ product.name }}</h3>
             <p class="cart-quantity-text">Quantity</p>
             <div class="cart-quantity-price">
               <button
                 class="cart-quantity-btn"
-                @click="decrementQuantity(cart.id)"
+                @click="decrementQuantity(product.id)"
               >
                 -
               </button>
-              <span class="cart-quantity"> {{ cart.quantity }}</span>
+              <span class="cart-quantity"> {{ product.quantity }}</span>
               <button
                 class="cart-quantity-btn"
-                @click="incrementQuantity(cart.id)"
+                @click="incrementQuantity(product.id)"
               >
                 +
               </button>
               <span class="cart-total-price"
-                >{{ +cart.quantity * +cart.price }} €</span
+                >{{ +product.quantity * +product.price }} €</span
               >
             </div>
           </div>
@@ -45,18 +40,7 @@
       <h1>Registration</h1>
       <div class="cart-contacts-info">
         <div class="cart-shopper-name">
-          <p class="cart-contacts-text">Firtsname</p>
-          <input
-            class="cart-contacts-input"
-            type="text"
-            v-model="clients_fullname"
-            :class="{
-              'in-valid': errors.clients_fullname,
-            }"
-          />
-        </div>
-        <div class="cart-shopper-name">
-          <p class="cart-contacts-text">Lastname</p>
+          <p class="cart-contacts-text">Fullname</p>
           <input
             class="cart-contacts-input"
             type="text"
@@ -107,7 +91,6 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      carts: [],
       products: null,
       message: 'You are not authorized',
       authUser: null,
@@ -121,6 +104,22 @@ export default {
       phone_number: null,
     }
   },
+
+  computed: {
+    totalPrice() {
+      return this.$store.state.cart.data.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      )
+    },
+
+    cart() {
+      const data = this.$store.state.cart.data
+
+      return data
+    },
+  },
+
   watch: {
     address(val) {
       if (this.errors.address) {
@@ -141,36 +140,12 @@ export default {
       localStorage.setItem('products', JSON.stringify(newValue))
     },
   },
-  computed: {
-    totalPrice() {
-      if (this.carts.quantity > 0) {
-        return this.carts.reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0
-        )
-      }
-    },
-  },
   methods: {
     incrementQuantity(id) {
-      let newCart = this.carts.map((item, index) => {
-        if (item.id === id) {
-          item.quantity++
-        }
-        return item
-      })
-
-      this.carts = newCart
+      this.$store.commit('cart/increment', id)
     },
     decrementQuantity(id) {
-      let newCart = this.carts.map((item, index) => {
-        if (item.id === id && item.quantity > 1) {
-          item.quantity--
-        }
-        return item
-      })
-
-      this.carts = newCart
+      this.$store.commit('cart/decrement', id)
     },
     validation() {
       let error = false
@@ -201,7 +176,6 @@ export default {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-
         data: {
           quantity: this.carts.reduce((a, b) => a + b.quantity, 0),
           user_id: 1,
